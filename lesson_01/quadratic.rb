@@ -15,7 +15,7 @@ if discriminant < 0
 elsif discriminant == 0
   puts "Root are equals with value: #{-b/2 * a}"
 else
-  D = Math.sqrt(discriminant)
-  puts "Roots values: X1 = #{(-b + D)/2 * a}, X2 = #{(-b - D)/2 * a}"
+  d = Math.sqrt(discriminant)
+  puts "Roots values: X1 = #{(-b + d)/2 * a}, X2 = #{(-b - d)/2 * a}"
 end
 
