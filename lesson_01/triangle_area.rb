@@ -1,7 +1,7 @@
 puts "Enter triangle height"
-height = gets.chomp
+height = gets.chomp.to_i
 
 puts "Enter triangle base"
-base = gets.chomp
+base = gets.chomp.to_i
 
-puts "Triangle area is #{(height.to_i * base.to_i)/2}"
+puts "Triangle area is #{(height * base)/2}"
