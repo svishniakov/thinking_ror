@@ -1,7 +1,5 @@
 hundred = []
 
-(10..100).step(5).each do |number|
-  hundred << number
-end
+10.step(by: 5, to: 100) { |number| hundred << number }
 
 puts hundred
