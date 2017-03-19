@@ -13,7 +13,7 @@ loop do
   puts "Please enter quantity"
   qty = gets.chomp.to_f
 
-  basket[product] = { :price => price, :quantity => qty, :amount => price * qty }
+  basket[product] = { price: price, quantity: qty, amount: price * qty }
   total_amount += basket[product][:amount]
 end
 
