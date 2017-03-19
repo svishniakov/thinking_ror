@@ -1,12 +1,7 @@
-fibonacci_arr = []
+fibonacci_sequence = [1, 1]
 
-def fibonacci(number)
-    if number < 3
-        1
-    else
-        fibonacci(number - 1) + fibonacci(number - 2)
-    end
+while (sequence_number = fibonacci_sequence[-1] + fibonacci_sequence[-2]) < 100
+  fibonacci_sequence << sequence_number
 end
 
-(1..16).each {|number| fibonacci_arr << fibonacci(number) if fibonacci(number) <= 100 }
-puts fibonacci_arr
+puts fibonacci_sequence
