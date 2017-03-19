@@ -12,4 +12,4 @@ year = { 'january' => 31,
   'december' => 31
 }
 
-year.each { |key, value| puts key if value == 30}
+year.each { |month, days| puts value if days == 30}
