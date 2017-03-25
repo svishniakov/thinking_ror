@@ -10,35 +10,35 @@
 # Возвращать предыдущую станцию, текущую, следующую, на основе маршрута
 
 class Train
-  attr_reader :train_speed, :train_cars, :train_type, :train_no
+  attr_reader :speed, :cars, :type, :no
 
-  def initialize(train_no, train_type, train_cars)
-    @train_no = train_no
-    @train_type = train_type
-    @train_cars = train_cars
-    @train_speed = 0
+  def initialize(no, type, cars)
+    @no = no
+    @type = type
+    @cars = cars
+    @speed = 0
     @train_station
   end
 
   def speedup(speed)
-    @train_speed + speed
+    @speed + speed
   end
 
   def stop
-    @train_speed = 0
+    @speed = 0
   end
 
   def attach_car
-    if @train_speed == 0
-      @train_cars += 1
+    if @speed == 0
+      @cars += 1
     else
       puts "Impossible attach a car"
     end
   end
 
   def detach_car
-    if @train_speed == 0 && @train_cars > 0
-      selftrain_cars -= 1
+    if @speed == 0 && @cars > 0
+      @cars -= 1
     else
       puts "Impossible detach a car"
     end
@@ -46,35 +46,36 @@ class Train
 
   def train_route(route)
     @train_route = route
-    @train_station = 0
+    @train_station_id = 0
   end
 
   def train_station
-    @train_route.stations[@train_station]
+    @train_route.stations[@train_station_id]
   end
 
   def next_station
-    @train_route.stations[@train_station + 1]
+    @train_route.stations[@train_station_id + 1] unless @train_station_id == @train_route.stations.size - 1
   end
 
   def previous_station
-    @train_route.stations[@train_station - 1]
+    @train_route.stations[@train_station_id - 1] unless @train_station_id == 0
   end
 
-  def train_next_station
-    if @train_station == @train_route.stations.size - 1
-      puts "End station"
+  def station_forward
+    if next_station?
+      next_station.train_arrival(self)
+      train_station.train_departure(self)
     else
-      train_station.train_arrival(self)
-      previous_station.train_departure(self)
+      puts "End station"
     end
   end
 
-  def train_previous_station
-    if @train_station == 0
-      puts "You are at the beginning of the route"
-    else
+  def station_backward
+    if previous_station?
       previous_station.train_arrival(self)
       train_station.train_departure(self)
+    else
+      puts "You are at the beginning of the route"
+    end
   end
 end

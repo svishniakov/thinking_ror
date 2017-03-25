@@ -11,7 +11,7 @@ class Route
   end
 
   def add_station(station)
-    @stations.insert(1, station)
+    @stations.insert(-2, station)
   end
 
   def del_station(station)
