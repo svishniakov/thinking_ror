@@ -1,15 +1,13 @@
 class Train
-  attr_reader :no, :type, :carriages
+  attr_reader :number, :carriages
   # Train types
   # 1 - passenger
   # 2 - cargo
-  # 0 - undefinite (default)
 
   @@all_trains = []
 
-  def initialize(no, type = 0)
-    @no = no
-    @type = type
+  def initialize(number)
+    @number = number
     @speed = 0
     @carriages = []
     @@all_trains << self
@@ -18,7 +16,7 @@ class Train
   def self.all_trains
     @@all_trains.each_with_index do |train, index|
       train.type == 1 ? type = "Passenger" : type = "Cargo"
-      puts "#{index}: No - #{train.no}, Type - #{type}, Carriages - #{train.carriages.count}"
+      puts "#{index}: No - #{train.number}, Type - #{type}, Carriages - #{train.carriages.count}"
     end
   end
 
@@ -35,7 +33,7 @@ class Train
   end
 
   def attach_carriage(carriage)
-    @carriages << carriage if @speed == 0
+    @carriages << carriage if @speed == 0 && correct_carriage?(carriage)
   end
 
   def detach_carriage(carriage)

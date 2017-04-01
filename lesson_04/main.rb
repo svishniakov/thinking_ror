@@ -4,6 +4,8 @@ require_relative 'station'
 require_relative 'cargo_train'
 require_relative 'passenger_train'
 require_relative 'carriage'
+require_relative 'cargo_carriage'
+require_relative 'passenger_carriage'
 
 class Main
 
@@ -11,16 +13,19 @@ class Main
     puts "----------------- Main menu ----------------------"
     puts "1 - routes and stations"
     puts "2 - trains and carriages"
-    puts "Anything else will stop the programm"
+    puts "0 - exit"
     puts "\nPlease select an option:"
 
     case gets.chomp.to_i
-    when 1
-      routes_stations_menu
-    when 2
-      trains_carriages_menu
-    else
-      exit
+      when 1
+        routes_stations_menu
+      when 2
+        trains_carriages_menu
+      when 0
+        exit
+      else
+        puts "*" * 40 + "\n* You've selected wrong option\n" + "*" * 40
+        main_menu
     end
   end
 
@@ -31,7 +36,6 @@ class Main
     puts "1 - create new route"
     puts "2 - manage routes/attach to a train"
     puts "0 on Enter - go to main menu"
-    puts "Anything else will stop the programm"
     routes_stations
   end
 
@@ -41,7 +45,6 @@ class Main
     puts "2 - manage train"
     puts "3 - attach train to the route"
     puts "0 on Enter - go to main menu"
-    puts "Anything else will stop the programm"
     trains_carriages
   end
 
@@ -56,20 +59,24 @@ class Main
     when 0
       main_menu
     else
-      exit!
+      puts "*" * 40 + "\n* You've selected wrong option\n" + "*" * 40
+      routes_stations
     end
   end
 
   def trains_carriages
     case gets.chomp.to_i
-    when 1
-      create_train
-    when 2
-      manage_trains
-    when 0
-      main_menu
-    else
-      exit!
+      when 1
+        create_train
+      when 2
+        manage_trains
+      when 3
+        route_train_attach
+      when 0
+        main_menu
+      else
+        puts "*" * 40 + "\n* You've selected wrong option\n" + "*" * 40
+        trains_carriages
     end
   end
 
@@ -92,15 +99,18 @@ class Main
   end
 
   def create_train_type(train_number, train_type)
-    if train_type == 1 || train_type == 2
-      Train.new(train_number, train_type)
-      train_type == 1 ? type = "Passenger" : type = "Cargo"
-      puts "*" * 49 + "*\n" + "#{type} train number #{train_number} created\n" + "*" * 50
-      trains_carriages_menu
-    else
-      puts "*" * 50 + "\nIncorrect train type\n" + "*" * 50
-      create_train
+    case train_type
+      when 1
+        PassengerTrain.new(train_number)
+        puts "*" * 49 + "*\n" + "Passenger train number #{train_number} created\n" + "*" * 50
+      when 2
+        CargoTrain.new(train_number)
+        puts "*" * 49 + "*\n" + "Cargo train number #{train_number} created\n" + "*" * 50
+      else
+        puts "*" * 50 + "\nIncorrect train type\n" + "*" * 50
+        create_train
     end
+    trains_carriages_menu
   end
 
   def manage_route(route)
@@ -109,7 +119,6 @@ class Main
     puts "2 - delete station"
     puts "3 - manage routes"
     puts "4 - attach train to the route"
-    puts "Anything else will stop the programm"
     case gets.chomp.to_i
     when 1
       create_station(route)
@@ -120,7 +129,8 @@ class Main
     when 4
       train_route_attach(route)
     else
-      exit!
+      puts "*" * 40 + "\n* You've selected wrong option\n" + "*" * 40
+      manage_route(route)
     end
   end
 
@@ -130,6 +140,7 @@ class Main
     puts "Please choose trains to manage"
     train_index = gets.chomp.to_i
     train = Train.find(train_index)
+
     train.train_route(route)
   end
 
@@ -140,6 +151,13 @@ class Main
     train_index = gets.chomp.to_i
     train = Train.find(train_index)
 
+    puts "--------- Available routes ----------\n\n"
+    puts Route.all_routes
+    puts "Please choose route to change"
+    route_index = gets.chomp.to_i
+    route = Route.find(route_index)
+
+    train.train_route(route)
   end
 
   def manage_routes
@@ -148,6 +166,7 @@ class Main
     puts "Please choose route to change"
     route_index = gets.chomp.to_i
     route = Route.find(route_index)
+
     manage_route(route)
   end
 
@@ -157,6 +176,7 @@ class Main
     puts "Please choose trains to manage"
     train_index = gets.chomp.to_i
     train = Train.find(train_index)
+
     manage_train(train)
   end
 
@@ -166,7 +186,6 @@ class Main
     puts "2 - delete carriage"
     puts "3 - choose another train"
     puts "4 - back to trains and carriages menu"
-    puts "Anything else will stop the programm"
     case gets.chomp.to_i
     when 1
       create_carriage(train)
@@ -177,13 +196,17 @@ class Main
     when 4
       trains_carriages_menu
     else
-      exit!
+      puts "*" * 40 + "\n* You've selected wrong option\n" + "*" * 40
+      manage_train(train)
     end
   end
 
   def create_carriage(train)
-    carriage = Carriage.new(train.type)
-    train.attach_carriage(carriage)
+    if train.type == 1
+      train.attach_carriage(PassengerCarriage.new)
+    else
+      train.attach_carriage(CargoCarriage.new)
+    end
     manage_train(train)
   end
 
