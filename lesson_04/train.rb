@@ -15,7 +15,14 @@ class Train
 
   def self.all_trains
     @@all_trains.each_with_index do |train, index|
-      train.is_a?(PassengerTrain)  ? type = "Passenger" : type = "Cargo"
+      train.is_a?(PassengerTrain) ? type = "Passenger" : type = "Cargo"
+      # Alternative for is_a?
+      # type = case train
+      #          when PassengerTrain
+      #            'Passenger'
+      #          when CargoTrain
+      #            'Cargo'
+      #        end
       puts "#{index}: No - #{train.number}, Type - #{type}, Carriages - #{train.carriages.count}"
     end
   end
