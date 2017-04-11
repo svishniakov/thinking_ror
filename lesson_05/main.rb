@@ -137,9 +137,9 @@ class Main
   def train_route_attach(route)
     puts "--------- Available trains ----------\n\n"
     puts Train.all_trains
-    puts "Please choose trains to manage"
-    train_index = gets.chomp.to_i
-    train = Train.find(train_index)
+    puts "Please enter train number"
+    number = gets.chomp
+    train = Train.find(number)
 
     train.train_route(route)
   end
@@ -147,9 +147,9 @@ class Main
   def route_train_attach
     puts "--------- Available trains ----------\n\n"
     puts Train.all_trains
-    puts "Please choose trains to manage"
-    train_index = gets.chomp.to_i
-    train = Train.find(train_index)
+    puts "Please enter train number"
+    number = gets.chomp
+    train = Train.find(number)
 
     puts "--------- Available routes ----------\n\n"
     puts Route.all_routes
@@ -173,11 +173,17 @@ class Main
   def manage_trains
     puts "--------- Available trains ----------\n\n"
     puts Train.all_trains
-    puts "Please choose trains to manage"
-    train_index = gets.chomp.to_i
-    train = Train.find(train_index)
-
-    manage_train(train)
+    puts "\n********** Please enter train number *********"
+    number = gets.chomp
+    train = Train.find(number)
+    unless train.nil?
+      manage_train(train)
+    else
+      puts "**********************************************\n"
+      puts "*             Train not found!!!             *\n"
+      puts "**********************************************\n\n"
+      manage_trains
+    end
   end
 
   def manage_train(train)
@@ -202,7 +208,7 @@ class Main
   end
 
   def create_carriage(train)
-    if train.type == 1
+    if train.is_a?(PassengerTrain)
       train.attach_carriage(PassengerCarriage.new)
     else
       train.attach_carriage(CargoCarriage.new)

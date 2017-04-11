@@ -25,7 +25,7 @@ class Station
     end
   end
 
-  def self.all_stations
+  def self.all
     @@all_stations
   end
 end

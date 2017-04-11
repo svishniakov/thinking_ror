@@ -11,37 +11,24 @@ class Train
   # 1 - passenger
   # 2 - cargo
 
-  @@all_trains = []
-  @@all_trains_by_number = {}
+  @@all_trains = {}
 
   def initialize(number)
     @number = number
     @speed = 0
     @carriages = []
-    @@all_trains << self
-    @@all_trains_by_number[number] = self
+    @@all_trains[number] = self
   end
 
   def self.all_trains
-    @@all_trains.each_with_index do |train, index|
-      train.is_a?(PassengerTrain) ? type = "Passenger" : type = "Cargo"
-      # Alternative for is_a?
-      # type = case train
-      #          when PassengerTrain
-      #            'Passenger'
-      #          when CargoTrain
-      #            'Cargo'
-      #        end
-      puts "#{index}: No - #{train.number}, Type - #{type}, Carriages - #{train.carriages.count}"
+    @@all_trains.each do |key, value|
+      value.is_a?(PassengerTrain) ? type = "Passenger" : type = "Cargo"
+      puts "Number - #{key}, Type - #{type}, Carriages - #{value.carriages.size}"
     end
   end
 
-  def self.find(index)
-    @@all_trains[index]
-  end
-
-  def self.find_by(number)
-    @@all_trains_by_number[number]
+  def self.find(number)
+    @@all_trains[number]
   end
 
   def speedup(speed)
