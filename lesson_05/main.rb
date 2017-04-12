@@ -6,8 +6,10 @@ require_relative 'passenger_train'
 require_relative 'carriage'
 require_relative 'cargo_carriage'
 require_relative 'passenger_carriage'
+require_relative 'find_menus'
 
 class Main
+  include FindMenus
 
   def main_menu
     puts "----------------- Main menu ----------------------"
@@ -135,17 +137,13 @@ class Main
   end
 
   def train_route_attach(route)
-    puts "--------- Available trains ----------\n\n"
-    puts Train.all_trains
-    puts "Please enter train number"
+    available_trains
     number = gets.chomp
     train = Train.find(number)
     unless train.nil?
       manage_train(train)
     else
-      puts "**********************************************\n"
-      puts "*             Train not found!!!             *\n"
-      puts "**********************************************\n\n"
+      train_not_found
       train_route_attach(route)
     end
 
@@ -153,23 +151,17 @@ class Main
   end
 
   def route_train_attach
-    puts "--------- Available trains ----------\n\n"
-    puts Train.all_trains
-    puts "Please enter train number"
+    available_trains
     number = gets.chomp
     train = Train.find(number)
     unless train.nil?
       manage_train(train)
     else
-      puts "**********************************************\n"
-      puts "*             Train not found!!!             *\n"
-      puts "**********************************************\n\n"
+      train_not_found
       route_train_attach
     end
 
-    puts "--------- Available routes ----------\n\n"
-    puts Route.all_routes
-    puts "Please choose route to change"
+    available_routes
     route_index = gets.chomp.to_i
     route = Route.find(route_index)
 
@@ -177,9 +169,7 @@ class Main
   end
 
   def manage_routes
-    puts "--------- Available routes ----------\n\n"
-    puts Route.all_routes
-    puts "Please choose route to change"
+    available_routes
     route_index = gets.chomp.to_i
     route = Route.find(route_index)
 
@@ -187,17 +177,13 @@ class Main
   end
 
   def manage_trains
-    puts "--------- Available trains ----------\n\n"
-    puts Train.all_trains
-    puts "\n********** Please enter train number *********"
+    available_trains
     number = gets.chomp
     train = Train.find(number)
     unless train.nil?
       manage_train(train)
     else
-      puts "**********************************************\n"
-      puts "*             Train not found!!!             *\n"
-      puts "**********************************************\n\n"
+      train_not_found
       manage_trains
     end
   end
