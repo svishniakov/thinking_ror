@@ -22,7 +22,7 @@ class Train
 
   def self.all_trains
     @@all_trains.each do |key, value|
-      value.is_a?(PassengerTrain) ? type = "Passenger" : type = "Cargo"
+        type = value.is_a?(PassengerTrain) ? "Passenger" : "Cargo"
       puts "Number - #{key}, Type - #{type}, Carriages - #{value.carriages.size}"
     end
   end
