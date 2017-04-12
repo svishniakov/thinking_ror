@@ -140,6 +140,14 @@ class Main
     puts "Please enter train number"
     number = gets.chomp
     train = Train.find(number)
+    unless train.nil?
+      manage_train(train)
+    else
+      puts "**********************************************\n"
+      puts "*             Train not found!!!             *\n"
+      puts "**********************************************\n\n"
+      train_route_attach(route)
+    end
 
     train.train_route(route)
   end
@@ -150,6 +158,14 @@ class Main
     puts "Please enter train number"
     number = gets.chomp
     train = Train.find(number)
+    unless train.nil?
+      manage_train(train)
+    else
+      puts "**********************************************\n"
+      puts "*             Train not found!!!             *\n"
+      puts "**********************************************\n\n"
+      route_train_attach
+    end
 
     puts "--------- Available routes ----------\n\n"
     puts Route.all_routes
