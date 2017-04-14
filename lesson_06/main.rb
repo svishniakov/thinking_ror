@@ -137,13 +137,31 @@ class Main
 
   def train_route_attach(route)
     available_trains
-    number = gets.chomp
+    attempts = 0
+
+    begin
+      number = gets.chomp
+      raise ArgumentError if number.empty?
+    rescue ArgumentError
+      attempts += 1
+      if attempts <= 3
+        number_blank_message
+        retry
+      else
+        previous_menu_message
+        manage_route(route)
+      end
+    end
+
+
     train = Train.find(number)
-    unless train.nil?
-      manage_train(train)
-    else
+
+    begin
+      raise ArgumentError if train.nil?
+    rescue ArgumentError
       train_not_found
-      train_route_attach(route)
+      previous_menu_message
+      manage_route(route)
     end
 
     train.train_route(route)
@@ -151,38 +169,94 @@ class Main
 
   def route_train_attach
     available_trains
-    number = gets.chomp
-    train = Train.find(number)
-    unless train.nil?
-      manage_train(train)
-    else
-      train_not_found
-      route_train_attach
+    attempts = 0
+
+    begin
+      number = gets.chomp
+      raise ArgumentError if number.empty?
+    rescue ArgumentError
+      attempts += 1
+      if attempts <= 3
+        number_blank_message
+        retry
+      else
+        previous_menu_message
+        trains_carriages
+      end
     end
 
+    train = Train.find(number)
+
     available_routes
-    route_index = gets.chomp.to_i
+    attempts = 0
+
+    begin
+      route_index = Integer(gets.chomp)
+    rescue
+      attempts += 1
+      if attempts <= 3
+        wrong_input_message
+        retry
+      else
+        previous_menu_message
+        trains_carriages
+      end
+    end
+
     route = Route.find(route_index)
     train.train_route(route)
   end
 
   def manage_routes
     available_routes
-    route_index = gets.chomp.to_i
+    attempts = 0
+
+    begin
+      route_index = Integer(gets.chomp)
+    rescue
+      attempts += 1
+      if attempts <= 3
+        wrong_input_message
+        retry
+      else
+        previous_menu_message
+        routes_stations
+      end
+    end
+
     route = Route.find(route_index)
     manage_route(route)
   end
 
   def manage_trains
     available_trains
-    number = gets.chomp
-    train = Train.find(number)
-    unless train.nil?
-      manage_train(train)
-    else
-      train_not_found
-      manage_trains
+    attempts = 0
+
+    begin
+      number = gets.chomp
+      raise ArgumentError if number.empty?
+    rescue ArgumentError
+      attempts += 1
+      if attempts <= 3
+        number_blank_message
+        retry
+      else
+        previous_menu_message
+        manage_trains
+      end
     end
+
+    train = Train.find(number)
+
+    begin
+      raise ArgumentError if train.nil?
+    rescue ArgumentError
+      train_not_found
+      previous_menu_message
+      trains_carriages
+    end
+
+    manage_train(train)
   end
 
   def manage_train(train)
@@ -215,7 +289,22 @@ class Main
     puts "*" * 50
     train.all_carriages
     puts "Please choose carriage to delete"
-    carriage_index = gets.chomp.to_i
+
+    attempts = 0
+
+    begin
+      carriage_index = Integer(gets.chomp)
+    rescue
+      attempts += 1
+      if attempts <= 3
+        wrong_input_message
+        retry
+      else
+        previous_menu_message
+        manage_trains
+      end
+    end
+
     train.detach_carriage(carriage_index)
     train.all_carriages
     manage_train(train)
@@ -224,9 +313,25 @@ class Main
   def create_station(route)
     puts "-" * 50
     puts "Please enter station name"
-    new_station = gets.chomp
+    new_station = gets.chomp.to_s
+
+    attempts = 0
+    begin
+      raise ArgumentError if new_station.empty?
+    rescue ArgumentError
+      attempts += 1
+      if attempts <= 3
+        name_blank_message
+        retry
+      else
+        previous_menu_message
+        manage_route(route)
+      end
+    end
+
     route.add_station(new_station)
     puts "Station #{new_station} created"
+
     route.show_route
     manage_route(route)
   end
@@ -235,7 +340,22 @@ class Main
     puts "-" * 50
     route.show_route
     puts "Please choose station to remove"
-    station_index = gets.chomp.to_i
+
+    attempts = 0
+
+    begin
+      station_index = Integer(gets.chomp)
+    rescue
+      attempts += 1
+      if attempts <= 3
+        wrong_input_message
+        retry
+      else
+        previous_menu_message
+        manage_routes
+      end
+    end
+
     route.del_station(station_index)
     puts "-" * 50
     route.show_route

@@ -59,6 +59,12 @@ module Mixins
     puts "**********************************************\n\n"
   end
 
+  def number_blank_message
+    puts "**********************************************\n"
+    puts "*      Train number can't be blank!!!        *\n"
+    puts "**********************************************\n\n"
+  end
+
   def name_blank_message
     puts "**********************************************\n"
     puts "*           Name can't be blank!!!           *\n"
@@ -80,6 +86,12 @@ module Mixins
   def previous_menu_message
     puts "**********************************************\n"
     puts "*       Returning to the previous menu       *\n"
+    puts "**********************************************\n\n"
+  end
+
+  def wrong_input_message
+    puts "**********************************************\n"
+    puts "*                Wrong input                 *\n"
     puts "**********************************************\n\n"
   end
 end
