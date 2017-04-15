@@ -44,6 +44,10 @@ class Route
   private
 
   def validate!
-    raise "Incomplete route" if @stations.size < 2
+    if @stations.size < 2
+      raise "Incomplete route"
+    elsif @stations.first.class.is_a?(Station) && @stations.last.class.is_a?(Station)
+      raise "Invalid object"
+    end
   end
 end

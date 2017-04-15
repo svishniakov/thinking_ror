@@ -141,8 +141,8 @@ class Main
 
     begin
       number = gets.chomp
-      raise ArgumentError if number.empty?
-    rescue ArgumentError
+      raise "Number couldn't be blank" if number.empty?
+    rescue
       attempts += 1
       if attempts <= 3
         number_blank_message
@@ -301,7 +301,7 @@ class Main
         retry
       else
         previous_menu_message
-        manage_trains
+
       end
     end
 
