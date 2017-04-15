@@ -51,7 +51,7 @@ class Main
       main_menu
     else
       wrong_option_message
-      routes_stations
+      main_menu
     end
   end
 
@@ -131,7 +131,7 @@ class Main
       train_route_attach(route)
     else
       wrong_option_message
-      manage_route(route)
+      main_menu
     end
   end
 
@@ -153,7 +153,6 @@ class Main
       end
     end
 
-
     train = Train.find(number)
 
     begin
@@ -173,8 +172,8 @@ class Main
 
     begin
       number = gets.chomp
-      raise ArgumentError if number.empty?
-    rescue ArgumentError
+      raise "Number can't be blank" if number.empty?
+    rescue
       attempts += 1
       if attempts <= 3
         number_blank_message
@@ -230,22 +229,7 @@ class Main
 
   def manage_trains
     available_trains
-    attempts = 0
-
-    begin
-      number = gets.chomp
-      raise ArgumentError if number.empty?
-    rescue ArgumentError
-      attempts += 1
-      if attempts <= 3
-        number_blank_message
-        retry
-      else
-        previous_menu_message
-        manage_trains
-      end
-    end
-
+    number = gets.chomp
     train = Train.find(number)
 
     begin
@@ -315,18 +299,12 @@ class Main
     puts "Please enter station name"
     new_station = gets.chomp.to_s
 
-    attempts = 0
     begin
       raise ArgumentError if new_station.empty?
     rescue ArgumentError
-      attempts += 1
-      if attempts <= 3
-        name_blank_message
-        retry
-      else
-        previous_menu_message
-        manage_route(route)
-      end
+      name_blank_message
+      previous_menu_message
+      manage_route(route)
     end
 
     route.add_station(new_station)
