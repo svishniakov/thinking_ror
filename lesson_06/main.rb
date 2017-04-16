@@ -299,16 +299,14 @@ class Main
     puts "Please enter station name"
     new_station = gets.chomp.to_s
 
-    begin
-      raise ArgumentError if new_station.empty?
-    rescue ArgumentError
+    if new_station.empty?
       name_blank_message
       previous_menu_message
       manage_route(route)
+    else
+      route.add_station(new_station)
+      puts "Station #{new_station} created"
     end
-
-    route.add_station(new_station)
-    puts "Station #{new_station} created"
 
     route.show_route
     manage_route(route)
