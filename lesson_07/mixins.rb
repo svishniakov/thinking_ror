@@ -33,8 +33,8 @@ module Mixins
 
   def manage_train_options
     puts "-" * 50 + "\nNow you can manage chosen train\n"
-    puts "1 - create carriage"
-    puts "2 - delete carriage"
+    puts "1 - attach carriage"
+    puts "2 - detach carriage"
     puts "3 - choose another train"
     puts "4 - back to trains and carriages menu"
   end

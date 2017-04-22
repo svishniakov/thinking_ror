@@ -276,7 +276,7 @@ class Main
   def delete_carriage(train)
     puts "*" * 50
     train.all_carriages
-    puts "Please choose carriage to delete"
+    puts "Please enter carriage number to be detached"
 
     attempts = 0
 
