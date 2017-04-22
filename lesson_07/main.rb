@@ -262,9 +262,13 @@ class Main
 
   def create_carriage(train)
     if train.is_a?(PassengerTrain)
-      train.attach_carriage(PassengerCarriage.new)
+      puts "Please enter total available seats"
+      seats = gets.chomp
+      train.attach_carriage(PassengerCarriage.new(seats))
     else
-      train.attach_carriage(CargoCarriage.new)
+      puts "Please enter total capacity"
+      capacity = gets.chomp
+      train.attach_carriage(CargoCarriage.new(capacity))
     end
     manage_train(train)
   end
@@ -277,7 +281,7 @@ class Main
     attempts = 0
 
     begin
-      carriage_index = Integer(gets.chomp)
+      carriage_number = Integer(gets.chomp)
     rescue
       attempts += 1
       if attempts <= 3
@@ -285,11 +289,10 @@ class Main
         retry
       else
         previous_menu_message
-
       end
     end
 
-    train.detach_carriage(carriage_index)
+    train.detach_carriage(carriage_number)
     train.all_carriages
     manage_train(train)
   end

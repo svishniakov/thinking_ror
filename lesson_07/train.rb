@@ -53,12 +53,18 @@ class Train
     @carriages << carriage if @speed == 0 && correct_carriage?(carriage)
   end
 
-  def detach_carriage(carriage)
-    @carriages.delete_at(carriage) if @speed == 0
+  def detach_carriage(number)
+    @carriages.delete_if { |carriage| carriage.number == number } if @speed == 0
   end
 
   def all_carriages
-    @carriages.each_with_index { |carriage, index| puts "#{index} - #{carriage}"}
+    @carriages.each do |carriage|
+      if carriage.instance_of?(CargoCarriage)
+        puts "Cargo carriage #: #{carriage.number}, total capacity: #{carriage.capacity}, free capacity: #{carriage.free_capacity}"
+      else
+        puts "Passenger carriage #: #{carriage.number}, total seats: #{carriage.seats}, free seats: #{carriage.free_seats}"
+      end
+    end
   end
 
   def each_carriage

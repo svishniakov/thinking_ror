@@ -1,16 +1,17 @@
 class CargoCarriage < Carriage
-  attr_reader :free_volume
+  attr_reader :free_capacity, :capacity
 
-  def initialize(volume)
-    @volume = volume.to_f
-    @free_volume = @volume
+  def initialize(capacity)
+    @capacity = capacity.to_f
+    @free_capacity = @capacity
+    super()
   end
 
-  def take_volume(volume)
-    @free_volume -= volume unless (@free_volume - volume) <= 0
+  def take_capacity(capacity)
+    @free_capacity -= capacity unless (@free_capacity - capacity) <= 0
   end
 
-  def taken_volume
-    @volume - @free_volume
+  def taken_capacity
+    @capacity - @free_capacity
   end
 end
