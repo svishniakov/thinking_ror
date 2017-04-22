@@ -61,6 +61,10 @@ class Train
     @carriages.each_with_index { |carriage, index| puts "#{index} - #{carriage}"}
   end
 
+  def each_carriage
+    @carriages.each { |carriage| yield(carriage) }
+  end
+
   def train_route(route)
     @train_route = route
     @train_station_id = 0
