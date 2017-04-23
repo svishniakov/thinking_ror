@@ -40,6 +40,7 @@ class Station
   end
 
   def each_train
+    puts "station.each_train"
     @trains.each { |train| yield(train)}
   end
 

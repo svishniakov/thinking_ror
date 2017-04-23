@@ -21,6 +21,7 @@ class Train
     @speed = 0
     @carriages = []
     @@all_trains[number] = self
+    register_instance
   end
 
   def valid?
@@ -32,12 +33,12 @@ class Train
 
   def self.all_trains
     unless @@all_trains.empty?
+      puts "\n********** Available trains ******************\n\n"
       @@all_trains.each do |key, value|
         type = value.is_a?(PassengerTrain) ? "Passenger" : "Cargo"
-        puts "\n********** Available trains ******************\n\n"
         puts "Number - #{key}, Type - #{type}, Carriages - #{value.carriages.size}"
-        puts "\n********** Please enter train number *********"
       end
+      puts "\n********** Please enter train number *********"
     else
       puts "There are no trains available. Please create train first."
     end
@@ -63,21 +64,11 @@ class Train
     @carriages.delete_if { |carriage| carriage.number == number } if @speed == 0
   end
 
-  def all_carriages
-    @carriages.each do |carriage|
-      if carriage.instance_of?(CargoCarriage)
-        puts "Cargo carriage #: #{carriage.number}, total capacity: #{carriage.capacity}, free capacity: #{carriage.free_capacity}"
-      else
-        puts "Passenger carriage #: #{carriage.number}, total seats: #{carriage.seats}, free seats: #{carriage.free_seats}"
-      end
-    end
-  end
-
   def each_carriage
     @carriages.each { |carriage| yield(carriage) }
   end
 
-  def train_route(route)
+  def train_attach_route(route)
     @train_route = route
     @train_station_id = 0
   end

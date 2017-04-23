@@ -41,17 +41,15 @@ class Main
 
   def routes_stations
     case gets.chomp.to_i
-    when 1
-      create_route
-    when 2
-      manage_routes
-    when 3
-      route_train_attach
-    when 0
-      main_menu
-    else
-      wrong_option_message
-      main_menu
+      when 1
+        create_route
+      when 2
+        manage_routes
+      when 0
+        main_menu
+      else
+        wrong_option_message
+        main_menu
     end
   end
 
@@ -90,7 +88,7 @@ class Main
       end
     end
 
-    route = Route.new(start_station, end_station)
+    route = Route.new(Station.new(start_station), Station.new(end_station))
     puts "\nRoute #{route.show_route} created"
     manage_route(route)
   end
@@ -121,17 +119,19 @@ class Main
   def manage_route(route)
     manage_route_options
     case gets.chomp.to_i
-    when 1
-      create_station(route)
-    when 2
-      delete_station(route)
-    when 3
-      manage_routes
-    when 4
-      train_route_attach(route)
-    else
-      wrong_option_message
-      main_menu
+      when 1
+        create_station(route)
+      when 2
+        delete_station(route)
+      when 3
+        manage_routes
+      when 4
+        train_route_attach(route)
+      when 5
+        route_details(route)
+      else
+        wrong_option_message
+        main_menu
     end
   end
 
@@ -157,7 +157,16 @@ class Main
       manage_route(route)
     end
 
-    train.train_route(route)
+    route.stations.train_arrival(train)
+    manage_route(route)
+  end
+
+  def route_details(route)
+    route.stations.each do |station|
+      puts "Station: #{station.name}"
+      station.each_train{ |train| puts "Trains: #{train}" }
+    end
+    manage_route(route)
   end
 
   def route_train_attach
@@ -172,6 +181,9 @@ class Main
     end
 
     train = Train.find(number)
+
+    puts "#{train.number} selected"
+
     puts Route.all_routes
 
     begin
@@ -183,24 +195,19 @@ class Main
     end
 
     route = Route.find(route_index)
-    train.train_route(route)
+    train.train_attach_route(route)
+    trains_carriages_menu
   end
 
   def manage_routes
     puts Route.all_routes
-    attempts = 0
 
     begin
       route_index = Integer(gets.chomp)
     rescue
-      attempts += 1
-      if attempts <= 3
-        wrong_input_message
-        retry
-      else
-        previous_menu_message
-        routes_stations
-      end
+      wrong_input_message
+      previous_menu_message
+      routes_stations
     end
 
     route = Route.find(route_index)
@@ -226,20 +233,20 @@ class Main
   def manage_train(train)
     manage_train_options
     case gets.chomp.to_i
-    when 1
-      create_carriage(train)
-    when 2
-      delete_carriage(train)
-    when 3
-      list_carriages(train)
-      manage_train(train)
-    when 4
-      manage_trains
-    when 5
-      trains_carriages_menu
-    else
-      wrong_option_message
-      manage_train(train)
+      when 1
+        create_carriage(train)
+      when 2
+        delete_carriage(train)
+      when 3
+        list_carriages(train)
+        manage_train(train)
+      when 4
+        manage_trains
+      when 5
+        trains_carriages_menu
+      else
+        wrong_option_message
+        manage_train(train)
     end
   end
 
@@ -291,7 +298,7 @@ class Main
       previous_menu_message
       manage_route(route)
     else
-      route.add_station(new_station)
+      route.add_station(Station.new(new_station))
       puts "Station #{new_station} created"
     end
 

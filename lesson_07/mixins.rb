@@ -11,7 +11,7 @@ module Mixins
   def routes_stations_menu_options
     puts "-" * 50 + "\nStations and routes menu. Now you can:\n"
     puts "1 - create new route"
-    puts "2 - manage routes/attach to a train"
+    puts "2 - manage routes"
     puts "0 on Enter - go to main menu"
   end
 
@@ -24,15 +24,16 @@ module Mixins
   end
 
   def manage_route_options
-    puts "-" * 50 + "\nNow you can manage newly created route\n"
+    puts "-" * 50 + "\nNow you can manage selected route\n"
     puts "1 - create station"
     puts "2 - delete station"
-    puts "3 - manage routes"
+    puts "3 - select another route"
     puts "4 - attach train to the route"
+    puts "5 - route details"
   end
 
   def manage_train_options
-    puts "-" * 50 + "\nNow you can manage chosen train\n"
+    puts "-" * 50 + "\nNow you can manage selected train\n"
     puts "1 - attach carriage"
     puts "2 - detach carriage"
     puts "3 - list all carriages"
