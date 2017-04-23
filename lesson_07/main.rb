@@ -136,21 +136,15 @@ class Main
   end
 
   def train_route_attach(route)
-    available_trains
-    attempts = 0
+    puts Train.all_trains
 
     begin
       number = gets.chomp
       raise "Number couldn't be blank" if number.empty?
     rescue
-      attempts += 1
-      if attempts <= 3
-        number_blank_message
-        retry
-      else
-        previous_menu_message
-        manage_route(route)
-      end
+      number_blank_message
+      previous_menu_message
+      manage_route(route)
     end
 
     train = Train.find(number)
@@ -167,39 +161,25 @@ class Main
   end
 
   def route_train_attach
-    available_trains
-    attempts = 0
+    puts Train.all_trains
 
     begin
       number = gets.chomp
       raise "Number can't be blank" if number.empty?
     rescue
-      attempts += 1
-      if attempts <= 3
-        number_blank_message
-        retry
-      else
-        previous_menu_message
-        trains_carriages
-      end
+      number_blank_message
+      trains_carriages
     end
 
     train = Train.find(number)
-
-    available_routes
-    attempts = 0
+    puts Route.all_routes
 
     begin
       route_index = Integer(gets.chomp)
     rescue
-      attempts += 1
-      if attempts <= 3
-        wrong_input_message
-        retry
-      else
-        previous_menu_message
-        trains_carriages
-      end
+      wrong_input_message
+      previous_menu_message
+      trains_carriages
     end
 
     route = Route.find(route_index)
@@ -207,7 +187,7 @@ class Main
   end
 
   def manage_routes
-    available_routes
+    puts Route.all_routes
     attempts = 0
 
     begin
@@ -228,7 +208,7 @@ class Main
   end
 
   def manage_trains
-    available_trains
+    puts Train.all_trains
     number = gets.chomp
     train = Train.find(number)
 
@@ -281,18 +261,11 @@ class Main
       list_carriages(train)
     puts "Please enter carriage number to be detached"
 
-    attempts = 0
-
     begin
       carriage_number = Integer(gets.chomp)
     rescue
-      attempts += 1
-      if attempts <= 3
-        wrong_input_message
-        retry
-      else
-        previous_menu_message
-      end
+      wrong_input_message
+      previous_menu_message
     end
 
     train.detach_carriage(carriage_number)
@@ -331,19 +304,12 @@ class Main
     route.show_route
     puts "Please choose station to remove"
 
-    attempts = 0
-
     begin
       station_index = Integer(gets.chomp)
     rescue
-      attempts += 1
-      if attempts <= 3
-        wrong_input_message
-        retry
-      else
-        previous_menu_message
-        manage_routes
-      end
+      wrong_input_message
+      previous_menu_message
+      manage_routes
     end
 
     route.del_station(station_index)

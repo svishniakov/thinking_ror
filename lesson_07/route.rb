@@ -32,8 +32,14 @@ class Route
   end
 
   def self.all_routes
-    @@all_routes.each_with_index do |route, index|
-      puts "#{index} - #{route.stations}"
+    unless @@all_routes.empty?
+      @@all_routes.each_with_index do |route, index|
+        puts "******** Available routes *********************\n"
+        puts "#{index} - #{route.stations}"
+        puts "\n****** Please choose route to change ********\n"
+      end
+    else
+      puts "There are no routes available. Please create route first."
     end
   end
 

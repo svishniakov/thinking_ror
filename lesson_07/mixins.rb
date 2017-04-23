@@ -40,19 +40,6 @@ module Mixins
     puts "5 - back to trains and carriages menu"
   end
 
-  # Find with messages
-  def available_trains
-    puts "--------- Available trains ----------\n\n"
-    puts Train.all_trains
-    puts "\n********** Please enter train number *********"
-  end
-
-  def available_routes
-    puts "--------- Available routes ----------\n\n"
-    puts Route.all_routes
-    puts "\n****** Please choose route to change ********\n"
-  end
-
   # Messages
   def train_not_found
     puts "**********************************************\n"

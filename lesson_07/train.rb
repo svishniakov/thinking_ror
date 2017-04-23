@@ -31,9 +31,15 @@ class Train
   end
 
   def self.all_trains
-    @@all_trains.each do |key, value|
+    unless @@all_trains.empty?
+      @@all_trains.each do |key, value|
         type = value.is_a?(PassengerTrain) ? "Passenger" : "Cargo"
-      puts "Number - #{key}, Type - #{type}, Carriages - #{value.carriages.size}"
+        puts "\n********** Available trains ******************\n\n"
+        puts "Number - #{key}, Type - #{type}, Carriages - #{value.carriages.size}"
+        puts "\n********** Please enter train number *********"
+      end
+    else
+      puts "There are no trains available. Please create train first."
     end
   end
 
