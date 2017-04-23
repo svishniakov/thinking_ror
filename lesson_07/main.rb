@@ -73,10 +73,10 @@ class Main
     attempts = 0
     begin
       puts "-" * 50 + "\nFirst station name\n"
-      start_station = gets.chomp
+      start_station = Station.new(gets.chomp)
       puts "End stations name"
-      end_station = gets.chomp
-      raise ArgumentError if start_station.empty? || end_station.empty?
+      end_station = Station.new(gets.chomp)
+      raise ArgumentError if start_station.nil? || end_station.nil?
     rescue ArgumentError
       attempts += 1
       if attempts <= 3
@@ -88,7 +88,7 @@ class Main
       end
     end
 
-    route = Route.new(Station.new(start_station), Station.new(end_station))
+    route = Route.new(start_station, end_station)
     puts "\nRoute #{route.show_route} created"
     manage_route(route)
   end
@@ -157,14 +157,17 @@ class Main
       manage_route(route)
     end
 
-    route.stations.train_arrival(train)
+    route_station = route.stations.first
+    route_station.train_arrival(train)
     manage_route(route)
   end
 
   def route_details(route)
     route.stations.each do |station|
-      puts "Station: #{station.name}"
-      station.each_train{ |train| puts "Trains: #{train}" }
+      puts "Station name: #{station.name}"
+      station.each_train{ |train| type = train.is_a?(CargoTrain) ? "Cargo" : "Passenger"
+        puts " Trains on the station"
+        puts "  Train number: #{train.number}, Train type: #{type}, Attached carriages: #{train.carriages.size}"}
     end
     manage_route(route)
   end
@@ -181,9 +184,6 @@ class Main
     end
 
     train = Train.find(number)
-
-    puts "#{train.number} selected"
-
     puts Route.all_routes
 
     begin
@@ -195,7 +195,9 @@ class Main
     end
 
     route = Route.find(route_index)
-    train.train_attach_route(route)
+
+    route_station = route.stations.first
+    route_station.train_arrival(train)
     trains_carriages_menu
   end
 

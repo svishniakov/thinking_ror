@@ -1,7 +1,7 @@
 class Station
   attr_accessor :trains, :name
 
-  STATION_NAME_FORMAT = /^[a-zа-я]{3,}$/i
+  STATION_NAME_FORMAT = /^[a-zа-я ]{3,}$/i
 
   @@all_stations = []
 
@@ -40,7 +40,6 @@ class Station
   end
 
   def each_train
-    puts "station.each_train"
     @trains.each { |train| yield(train)}
   end
 

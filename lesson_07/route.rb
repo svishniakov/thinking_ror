@@ -35,7 +35,7 @@ class Route
     unless @@all_routes.empty?
       puts "******** Available routes *********************\n"
       @@all_routes.each_with_index do |route, index|
-        puts "#{index} - #{route.stations}"
+        puts "#{index} - #{route.stations.map {|station| station.name}}"
       end
       puts "\n****** Please select route  *****************\n"
     else
@@ -44,7 +44,7 @@ class Route
   end
 
   def show_route
-    @stations.each.with_index { |station, index| puts "#{index} - #{station}" }
+    @stations.each.with_index { |station, index| puts "#{index} - #{station.name}" }
   end
 
   private
