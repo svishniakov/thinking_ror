@@ -251,8 +251,11 @@ class Main
     when 2
       delete_carriage(train)
     when 3
-      manage_trains
+      list_carriages(train)
+      manage_train(train)
     when 4
+      manage_trains
+    when 5
       trains_carriages_menu
     else
       wrong_option_message
@@ -275,7 +278,7 @@ class Main
 
   def delete_carriage(train)
     puts "*" * 50
-    train.all_carriages
+      list_carriages(train)
     puts "Please enter carriage number to be detached"
 
     attempts = 0
@@ -295,6 +298,14 @@ class Main
     train.detach_carriage(carriage_number)
     train.all_carriages
     manage_train(train)
+  end
+
+  def list_carriages(train)
+    train.each_carriage{ |carriage| if carriage.instance_of?(CargoCarriage)
+      puts "Cargo carriage #: #{carriage.number}, total capacity: #{carriage.capacity}, available capacity: #{carriage.free_capacity}"
+    else
+      puts "Passenger carriage #: #{carriage.number}, total seats: #{carriage.seats}, available seats: #{carriage.free_seats}"
+    end}
   end
 
   def create_station(route)

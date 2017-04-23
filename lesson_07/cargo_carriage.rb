@@ -8,7 +8,7 @@ class CargoCarriage < Carriage
   end
 
   def take_capacity(capacity)
-    @free_capacity -= capacity unless (@free_capacity - capacity) <= 0
+    @free_capacity -= capacity if capacity <= @free_capacity
   end
 
   def taken_capacity

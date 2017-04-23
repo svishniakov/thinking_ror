@@ -35,8 +35,9 @@ module Mixins
     puts "-" * 50 + "\nNow you can manage chosen train\n"
     puts "1 - attach carriage"
     puts "2 - detach carriage"
-    puts "3 - choose another train"
-    puts "4 - back to trains and carriages menu"
+    puts "3 - list all carriages"
+    puts "4 - choose another train"
+    puts "5 - back to trains and carriages menu"
   end
 
   # Find with messages
