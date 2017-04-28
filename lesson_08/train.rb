@@ -70,19 +70,19 @@ class Train
 
   def train_attach_route(route)
     @train_route = route
-    @train_station_id = 0
+    @station_id = 0
   end
 
   def train_station
-    @train_route.stations[@train_station_id]
+    @train_route.stations[@station_id]
   end
 
   def next_station
-    @train_route.stations[@train_station_id + 1] unless @train_station_id == @train_route.stations.size - 1
+    @train_route.stations[@station_id + 1] unless @station_id == @train_route.stations.size - 1
   end
 
   def previous_station
-    @train_route.stations[@train_station_id - 1] unless @train_station_id.zero?
+    @train_route.stations[@station_id - 1] unless @station_id.zero?
   end
 
   def station_forward

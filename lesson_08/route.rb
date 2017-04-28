@@ -27,33 +27,35 @@ class Route
     @stations.delete_at(station)
   end
 
-  def self.find(index)
-    @@all_routes[index]
-  end
-
-  def self.all_routes
-    if @@all_routes.empty?
-      puts 'There are no routes available. Please create route first.'
-    else
-      puts "******** Available routes *********************\n"
-      @@all_routes.each_with_index do |route, index|
-        puts "#{index} - #{route.stations.map(&:name)}"
-      end
-      puts "\n****** Please select route  *****************\n"
-    end
-  end
-
   def show_route
-    @stations.each.with_index { |station, index| puts "#{index} - #{station.name}" }
+    @stations.each.with_index { |s, i| puts "#{i} - #{s.name}" }
+  end
+
+  class << self
+    def find(index)
+      @@all_routes[index]
+    end
+
+    def all_routes
+      if @@all_routes.empty?
+        puts 'There are no routes available. Please create route first.'
+      else
+        puts "******** Available routes *********************\n"
+        @@all_routes.each_with_index do |r, i|
+          puts "#{i} - #{r.stations.map(&:name)}"
+        end
+        puts "\n****** Please select route  *****************\n"
+      end
+    end
   end
 
   private
 
   def validate!
-    if @stations.size < 2
-      raise 'Incomplete route'
-    elsif @stations.first.class.is_a?(Station) && @stations.last.class.is_a?(Station)
+    if @stations.first.class.is_a?(Station) && @stations.last.class.is_a?(Station)
       raise 'Invalid object'
+    elsif @stations.size < 2
+      raise 'Incomplete route'
     end
   end
 end

@@ -8,8 +8,6 @@ module InstanceCounter
     attr_accessor :instances
   end
 
-  protected
-
   module InstanceMethods
     def register_instance
       self.class.instances ||= 0

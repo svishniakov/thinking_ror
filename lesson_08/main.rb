@@ -13,18 +13,8 @@ class Main
 
   def main_menu
     main_menu_options
-
-    case gets.chomp.to_i
-    when 1
-      routes_stations_menu
-    when 2
-      trains_carriages_menu
-    when 0
-      exit
-    else
-      wrong_option_message
-      main_menu
-    end
+    option = gets.chomp.to_i
+    send(MAIN_MENU[option] || wrong_option_message)
   end
 
   private
@@ -40,52 +30,24 @@ class Main
   end
 
   def routes_stations
-    case gets.chomp.to_i
-    when 1
-      create_route
-    when 2
-      manage_routes
-    when 0
-      main_menu
-    else
-      wrong_option_message
-      main_menu
-    end
+    option = gets.chomp.to_i
+    send(ROUTES_STATIONS[option] || wrong_option_message)
   end
 
   def trains_carriages
-    case gets.chomp.to_i
-    when 1
-      create_train
-    when 2
-      manage_trains
-    when 3
-      route_train_attach
-    when 0
-      main_menu
-    else
-      wrong_option_message
-      trains_carriages
-    end
+    option = gets.chomp.to_i
+    send(TRAINS_CARRIAGES[option] || wrong_option_message)
   end
 
   def create_route
-    attempts = 0
     begin
       puts '-' * 50 + "\nFirst station name\n"
       start_station = Station.new(gets.chomp)
       puts 'End stations name'
       end_station = Station.new(gets.chomp)
-      raise ArgumentError if start_station.nil? || end_station.nil?
-    rescue ArgumentError
-      attempts += 1
-      if attempts <= 3
-        name_blank_message
-        retry
-      else
-        main_menu_message
-        main_menu
-      end
+      raise "Station name couldn't be blank" if start_station.nil? || end_station.nil?
+    rescue
+      main_menu_message
     end
 
     route = Route.new(start_station, end_station)
@@ -118,7 +80,11 @@ class Main
 
   def manage_route(route)
     manage_route_options
-    case gets.chomp.to_i
+    manage_route_choice(route, gets.chomp.to_i)
+  end
+
+  def manage_route_choice(route, choice)
+    case choice
     when 1
       create_station(route)
     when 2
@@ -131,7 +97,6 @@ class Main
       route_details(route)
     else
       wrong_option_message
-      main_menu
     end
   end
 
@@ -142,18 +107,14 @@ class Main
       number = gets.chomp
       raise "Number couldn't be blank" if number.empty?
     rescue
-      number_blank_message
-      previous_menu_message
       manage_route(route)
     end
 
     train = Train.find(number)
 
     begin
-      raise ArgumentError if train.nil?
-    rescue ArgumentError
-      train_not_found
-      previous_menu_message
+      raise 'Train not found' if train.nil?
+    rescue
       manage_route(route)
     end
 
@@ -168,7 +129,8 @@ class Main
       station.each_train do |train|
         type = train.is_a?(CargoTrain) ? 'Cargo' : 'Passenger'
         puts ' Trains on the station'
-        puts "  Train number: #{train.number}, Train type: #{type}, Attached carriages: #{train.carriages.size}"
+        puts "  Train number: #{train.number}, Train type: #{type}" \
+             ", Attached carriages: #{train.carriages.size}"
       end
     end
     manage_route(route)
@@ -181,7 +143,6 @@ class Main
       number = gets.chomp
       raise "Number can't be blank" if number.empty?
     rescue
-      number_blank_message
       trains_carriages
     end
 
@@ -192,12 +153,10 @@ class Main
       route_index = Integer(gets.chomp)
     rescue
       wrong_input_message
-      previous_menu_message
       trains_carriages
     end
 
     route = Route.find(route_index)
-
     route_station = route.stations.first
     route_station.train_arrival(train)
     trains_carriages_menu
@@ -210,7 +169,6 @@ class Main
       route_index = Integer(gets.chomp)
     rescue
       wrong_input_message
-      previous_menu_message
       routes_stations
     end
 
@@ -224,10 +182,8 @@ class Main
     train = Train.find(number)
 
     begin
-      raise ArgumentError if train.nil?
-    rescue ArgumentError
-      train_not_found
-      previous_menu_message
+      raise 'Train not found' if train.nil?
+    rescue
       trains_carriages
     end
 
@@ -236,7 +192,11 @@ class Main
 
   def manage_train(train)
     manage_train_options
-    case gets.chomp.to_i
+    manage_train_choice(train, gets.chomp.to_i)
+  end
+
+  def manage_train_choice(train, choice)
+    case choice
     when 1
       create_carriage(train)
     when 2
@@ -250,7 +210,6 @@ class Main
       trains_carriages_menu
     else
       wrong_option_message
-      manage_train(train)
     end
   end
 
@@ -276,7 +235,6 @@ class Main
       carriage_number = Integer(gets.chomp)
     rescue
       wrong_input_message
-      previous_menu_message
     end
 
     train.detach_carriage(carriage_number)
@@ -287,10 +245,13 @@ class Main
   def list_carriages(train)
     train.each_carriage do |carriage|
       if carriage.instance_of?(CargoCarriage)
-        puts "Cargo carriage #: #{carriage.number}, total capacity: #{carriage.capacity}, available capacity: #{carriage.free_capacity}"
+        puts "Cargo carriage #: #{carriage.number}, total capacity: #{carriage.capacity}" \
+             ", available capacity: #{carriage.free_capacity}"
       else
-        puts "Passenger carriage #: #{carriage.number}, total seats: #{carriage.seats}, available seats: #{carriage.free_seats}"
-    end end
+        puts "Passenger carriage #: #{carriage.number}, total seats: #{carriage.seats}" \
+             ", available seats: #{carriage.free_seats}"
+      end
+    end
   end
 
   def create_station(route)
@@ -300,7 +261,6 @@ class Main
 
     if new_station.empty?
       name_blank_message
-      previous_menu_message
       manage_route(route)
     else
       route.add_station(Station.new(new_station))
@@ -320,7 +280,6 @@ class Main
       station_index = Integer(gets.chomp)
     rescue
       wrong_input_message
-      previous_menu_message
       manage_routes
     end
 
