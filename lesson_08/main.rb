@@ -15,15 +15,15 @@ class Main
     main_menu_options
 
     case gets.chomp.to_i
-      when 1
-        routes_stations_menu
-      when 2
-        trains_carriages_menu
-      when 0
-        exit
-      else
-        wrong_option_message
-        main_menu
+    when 1
+      routes_stations_menu
+    when 2
+      trains_carriages_menu
+    when 0
+      exit
+    else
+      wrong_option_message
+      main_menu
     end
   end
 
@@ -41,40 +41,40 @@ class Main
 
   def routes_stations
     case gets.chomp.to_i
-      when 1
-        create_route
-      when 2
-        manage_routes
-      when 0
-        main_menu
-      else
-        wrong_option_message
-        main_menu
+    when 1
+      create_route
+    when 2
+      manage_routes
+    when 0
+      main_menu
+    else
+      wrong_option_message
+      main_menu
     end
   end
 
   def trains_carriages
     case gets.chomp.to_i
-      when 1
-        create_train
-      when 2
-        manage_trains
-      when 3
-        route_train_attach
-      when 0
-        main_menu
-      else
-        wrong_option_message
-        trains_carriages
+    when 1
+      create_train
+    when 2
+      manage_trains
+    when 3
+      route_train_attach
+    when 0
+      main_menu
+    else
+      wrong_option_message
+      trains_carriages
     end
   end
 
   def create_route
     attempts = 0
     begin
-      puts "-" * 50 + "\nFirst station name\n"
+      puts '-' * 50 + "\nFirst station name\n"
       start_station = Station.new(gets.chomp)
-      puts "End stations name"
+      puts 'End stations name'
       end_station = Station.new(gets.chomp)
       raise ArgumentError if start_station.nil? || end_station.nil?
     rescue ArgumentError
@@ -94,24 +94,24 @@ class Main
   end
 
   def create_train
-    puts "-" * 50 + "\nPlease enter train number\n"
+    puts '-' * 50 + "\nPlease enter train number\n"
     train_number = gets.chomp
-    puts "Please choose train type:" + "\n1 - passenger\n" + "2 - cargo\n"
+    puts 'Please choose train type:' + "\n1 - passenger\n" + "2 - cargo\n"
     train_type = gets.chomp.to_i
     create_train_type(train_number, train_type)
   end
 
   def create_train_type(train_number, train_type)
     case train_type
-      when 1
-        PassengerTrain.new(train_number)
-        puts "*" * 49 + "*\n" + "Passenger train number #{train_number} created\n" + "*" * 50
-      when 2
-        CargoTrain.new(train_number)
-        puts "*" * 49 + "*\n" + "Cargo train number #{train_number} created\n" + "*" * 50
-      else
-        puts "*" * 50 + "\nIncorrect train type\n" + "*" * 50
-        create_train
+    when 1
+      PassengerTrain.new(train_number)
+      puts '*' * 49 + "*\n" + "Passenger train number #{train_number} created\n" + '*' * 50
+    when 2
+      CargoTrain.new(train_number)
+      puts '*' * 49 + "*\n" + "Cargo train number #{train_number} created\n" + '*' * 50
+    else
+      puts '*' * 50 + "\nIncorrect train type\n" + '*' * 50
+      create_train
     end
     trains_carriages_menu
   end
@@ -119,19 +119,19 @@ class Main
   def manage_route(route)
     manage_route_options
     case gets.chomp.to_i
-      when 1
-        create_station(route)
-      when 2
-        delete_station(route)
-      when 3
-        manage_routes
-      when 4
-        train_route_attach(route)
-      when 5
-        route_details(route)
-      else
-        wrong_option_message
-        main_menu
+    when 1
+      create_station(route)
+    when 2
+      delete_station(route)
+    when 3
+      manage_routes
+    when 4
+      train_route_attach(route)
+    when 5
+      route_details(route)
+    else
+      wrong_option_message
+      main_menu
     end
   end
 
@@ -165,9 +165,11 @@ class Main
   def route_details(route)
     route.stations.each do |station|
       puts "Station name: #{station.name}"
-      station.each_train{ |train| type = train.is_a?(CargoTrain) ? "Cargo" : "Passenger"
-        puts " Trains on the station"
-        puts "  Train number: #{train.number}, Train type: #{type}, Attached carriages: #{train.carriages.size}"}
+      station.each_train do |train|
+        type = train.is_a?(CargoTrain) ? 'Cargo' : 'Passenger'
+        puts ' Trains on the station'
+        puts "  Train number: #{train.number}, Train type: #{type}, Attached carriages: #{train.carriages.size}"
+      end
     end
     manage_route(route)
   end
@@ -235,30 +237,30 @@ class Main
   def manage_train(train)
     manage_train_options
     case gets.chomp.to_i
-      when 1
-        create_carriage(train)
-      when 2
-        delete_carriage(train)
-      when 3
-        list_carriages(train)
-        manage_train(train)
-      when 4
-        manage_trains
-      when 5
-        trains_carriages_menu
-      else
-        wrong_option_message
-        manage_train(train)
+    when 1
+      create_carriage(train)
+    when 2
+      delete_carriage(train)
+    when 3
+      list_carriages(train)
+      manage_train(train)
+    when 4
+      manage_trains
+    when 5
+      trains_carriages_menu
+    else
+      wrong_option_message
+      manage_train(train)
     end
   end
 
   def create_carriage(train)
     if train.is_a?(PassengerTrain)
-      puts "Please enter total available seats"
+      puts 'Please enter total available seats'
       seats = gets.chomp
       train.attach_carriage(PassengerCarriage.new(seats))
     else
-      puts "Please enter total capacity"
+      puts 'Please enter total capacity'
       capacity = gets.chomp
       train.attach_carriage(CargoCarriage.new(capacity))
     end
@@ -266,9 +268,9 @@ class Main
   end
 
   def delete_carriage(train)
-    puts "*" * 50
-      list_carriages(train)
-    puts "Please enter carriage number to be detached"
+    puts '*' * 50
+    list_carriages(train)
+    puts 'Please enter carriage number to be detached'
 
     begin
       carriage_number = Integer(gets.chomp)
@@ -283,16 +285,17 @@ class Main
   end
 
   def list_carriages(train)
-    train.each_carriage{ |carriage| if carriage.instance_of?(CargoCarriage)
-      puts "Cargo carriage #: #{carriage.number}, total capacity: #{carriage.capacity}, available capacity: #{carriage.free_capacity}"
-    else
-      puts "Passenger carriage #: #{carriage.number}, total seats: #{carriage.seats}, available seats: #{carriage.free_seats}"
-    end}
+    train.each_carriage do |carriage|
+      if carriage.instance_of?(CargoCarriage)
+        puts "Cargo carriage #: #{carriage.number}, total capacity: #{carriage.capacity}, available capacity: #{carriage.free_capacity}"
+      else
+        puts "Passenger carriage #: #{carriage.number}, total seats: #{carriage.seats}, available seats: #{carriage.free_seats}"
+    end end
   end
 
   def create_station(route)
-    puts "-" * 50
-    puts "Please enter station name"
+    puts '-' * 50
+    puts 'Please enter station name'
     new_station = gets.chomp.to_s
 
     if new_station.empty?
@@ -309,9 +312,9 @@ class Main
   end
 
   def delete_station(route)
-    puts "-" * 50
+    puts '-' * 50
     route.show_route
-    puts "Please choose station to remove"
+    puts 'Please choose station to remove'
 
     begin
       station_index = Integer(gets.chomp)
@@ -322,7 +325,7 @@ class Main
     end
 
     route.del_station(station_index)
-    puts "-" * 50
+    puts '-' * 50
     route.show_route
     manage_route(route)
   end

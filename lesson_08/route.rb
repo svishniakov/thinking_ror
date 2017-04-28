@@ -32,14 +32,14 @@ class Route
   end
 
   def self.all_routes
-    unless @@all_routes.empty?
+    if @@all_routes.empty?
+      puts 'There are no routes available. Please create route first.'
+    else
       puts "******** Available routes *********************\n"
       @@all_routes.each_with_index do |route, index|
-        puts "#{index} - #{route.stations.map {|station| station.name}}"
+        puts "#{index} - #{route.stations.map(&:name)}"
       end
       puts "\n****** Please select route  *****************\n"
-    else
-      puts "There are no routes available. Please create route first."
     end
   end
 
@@ -51,9 +51,9 @@ class Route
 
   def validate!
     if @stations.size < 2
-      raise "Incomplete route"
+      raise 'Incomplete route'
     elsif @stations.first.class.is_a?(Station) && @stations.last.class.is_a?(Station)
-      raise "Invalid object"
+      raise 'Invalid object'
     end
   end
 end

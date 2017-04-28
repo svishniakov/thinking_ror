@@ -32,15 +32,15 @@ class Train
   end
 
   def self.all_trains
-    unless @@all_trains.empty?
+    if @@all_trains.empty?
+      puts 'There are no trains available. Please create train first.'
+    else
       puts "\n********** Available trains ******************\n\n"
       @@all_trains.each do |key, value|
-        type = value.is_a?(PassengerTrain) ? "Passenger" : "Cargo"
+        type = value.is_a?(PassengerTrain) ? 'Passenger' : 'Cargo'
         puts "Number - #{key}, Type - #{type}, Carriages - #{value.carriages.size}"
       end
       puts "\n********** Please enter train number *********"
-    else
-      puts "There are no trains available. Please create train first."
     end
   end
 
@@ -57,11 +57,11 @@ class Train
   end
 
   def attach_carriage(carriage)
-    @carriages << carriage if @speed == 0 && correct_carriage?(carriage)
+    @carriages << carriage if @speed.zero? && correct_carriage?(carriage)
   end
 
   def detach_carriage(number)
-    @carriages.delete_if { |carriage| carriage.number == number } if @speed == 0
+    @carriages.delete_if { |carriage| carriage.number == number } if @speed.zero?
   end
 
   def each_carriage
@@ -82,7 +82,7 @@ class Train
   end
 
   def previous_station
-    @train_route.stations[@train_station_id - 1] unless @train_station_id == 0
+    @train_route.stations[@train_station_id - 1] unless @train_station_id.zero?
   end
 
   def station_forward
@@ -90,7 +90,7 @@ class Train
       next_station.train_arrival(self)
       train_station.train_departure(self)
     else
-      puts "End station"
+      puts 'End station'
     end
   end
 
@@ -99,7 +99,7 @@ class Train
       previous_station.train_arrival(self)
       train_station.train_departure(self)
     else
-      puts "You are at the beginning of the route"
+      puts 'You are at the beginning of the route'
     end
   end
 

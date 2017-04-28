@@ -8,14 +8,14 @@ class Station
   def initialize(name)
     @name = name
     validate!
-    @trains  = []
+    @trains = []
     @@all_stations << self
   end
 
   def valid?
     validate!
   rescue => e
-    puts "#{e.message}"
+    puts e.message.to_s
     false
   end
 
@@ -29,7 +29,7 @@ class Station
 
   def all_trains(train_type = nil)
     if train_type?
-      @trains.select{ |train| train.type == train_type }
+      @trains.select { |train| train.type == train_type }
     else
       @trains
     end
@@ -40,13 +40,13 @@ class Station
   end
 
   def each_train
-    @trains.each { |train| yield(train)}
+    @trains.each { |train| yield(train) }
   end
 
   private
 
   def validate!
-    raise "Wrong station name" if name !~ STATION_NAME_FORMAT
+    raise 'Wrong station name' if name !~ STATION_NAME_FORMAT
     true
   end
 end

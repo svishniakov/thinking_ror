@@ -1,5 +1,4 @@
 class CargoTrain < Train
-
   protected
 
   def correct_carriage?(carriage)
