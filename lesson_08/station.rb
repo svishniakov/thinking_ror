@@ -1,4 +1,5 @@
 class Station
+  include Mixins
   attr_accessor :trains, :name
 
   STATION_NAME_FORMAT = /^[a-zа-я ]{3,}$/i

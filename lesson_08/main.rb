@@ -40,19 +40,17 @@ class Main
   end
 
   def create_route
-    begin
-      puts '-' * 50 + "\nFirst station name\n"
-      start_station = Station.new(gets.chomp)
-      puts 'End stations name'
-      end_station = Station.new(gets.chomp)
-      raise "Station name couldn't be blank" if start_station.nil? || end_station.nil?
-    rescue
-      main_menu_message
-    end
+    start_station = create_route_station("\nPlease enter first station name:\n")
+    end_station = create_route_station("\nPlease enter last station name:\n")
 
     route = Route.new(start_station, end_station)
     puts "\nRoute #{route.show_route} created"
     manage_route(route)
+  end
+
+  def create_route_station(message)
+    puts message
+    Station.new(gets.chomp)
   end
 
   def create_train
@@ -60,22 +58,30 @@ class Main
     train_number = gets.chomp
     puts 'Please choose train type:' + "\n1 - passenger\n" + "2 - cargo\n"
     train_type = gets.chomp.to_i
-    create_train_type(train_number, train_type)
+    create_train_with_type(train_number, train_type)
   end
 
-  def create_train_type(train_number, train_type)
+  def create_train_with_type(train_number, train_type)
     case train_type
     when 1
-      PassengerTrain.new(train_number)
-      puts '*' * 49 + "*\n" + "Passenger train number #{train_number} created\n" + '*' * 50
+      create_passenger_train(train_number)
     when 2
-      CargoTrain.new(train_number)
-      puts '*' * 49 + "*\n" + "Cargo train number #{train_number} created\n" + '*' * 50
+      create_cargo_train(train_number)
     else
       puts '*' * 50 + "\nIncorrect train type\n" + '*' * 50
       create_train
     end
     trains_carriages_menu
+  end
+
+  def create_passenger_train(train_number)
+    PassengerTrain.new(train_number)
+    puts '*' * 49 + "*\n" + "Passenger train number #{train_number} created\n" + '*' * 50
+  end
+
+  def create_cargo_train(train_number)
+    CargoTrain.new(train_number)
+    puts '*' * 49 + "*\n" + "Cargo train number #{train_number} created\n" + '*' * 50
   end
 
   def manage_route(route)
@@ -102,25 +108,24 @@ class Main
 
   def train_route_attach(route)
     puts Train.all_trains
-
-    begin
-      number = gets.chomp
-      raise "Number couldn't be blank" if number.empty?
-    rescue
-      manage_route(route)
-    end
-
-    train = Train.find(number)
-
-    begin
-      raise 'Train not found' if train.nil?
-    rescue
-      manage_route(route)
-    end
-
+    train = Train.find(select_route)
+    train_find(train)
     route_station = route.stations.first
     route_station.train_arrival(train)
     manage_route(route)
+  end
+
+  def select_route
+    number = gets.chomp
+    raise "Number couldn't be blank" if number.empty?
+  rescue
+    main_menu
+  end
+
+  def train_find(train)
+    raise 'Train not found' if train.nil?
+  rescue
+    trains_carriages
   end
 
   def route_details(route)
@@ -138,28 +143,25 @@ class Main
 
   def route_train_attach
     puts Train.all_trains
-
-    begin
-      number = gets.chomp
-      raise "Number can't be blank" if number.empty?
-    rescue
-      trains_carriages
-    end
-
-    train = Train.find(number)
-    puts Route.all_routes
-
-    begin
-      route_index = Integer(gets.chomp)
-    rescue
-      wrong_input_message
-      trains_carriages
-    end
-
-    route = Route.find(route_index)
-    route_station = route.stations.first
+    train = Train.find(gets.chomp.to_i)
+    route_station = Route.find(find_route_index).stations.first
     route_station.train_arrival(train)
-    trains_carriages_menu
+  end
+
+  def select_train
+    number = gets.chomp
+    raise "Number can't be blank" if number.empty?
+  rescue
+    trains_carriages
+  end
+
+  def find_route_index
+    puts Route.all_routes
+    begin
+      Integer(gets.chomp)
+    rescue
+      trains_carriages
+    end
   end
 
   def manage_routes
@@ -227,7 +229,6 @@ class Main
   end
 
   def delete_carriage(train)
-    puts '*' * 50
     list_carriages(train)
     puts 'Please enter carriage number to be detached'
 
@@ -243,6 +244,7 @@ class Main
   end
 
   def list_carriages(train)
+    puts '*' * 50
     train.each_carriage do |carriage|
       if carriage.instance_of?(CargoCarriage)
         puts "Cargo carriage #: #{carriage.number}, total capacity: #{carriage.capacity}" \
@@ -255,26 +257,18 @@ class Main
   end
 
   def create_station(route)
-    puts '-' * 50
-    puts 'Please enter station name'
+    puts "-" * 50 + "-\n" + "Please enter station name"
     new_station = gets.chomp.to_s
 
-    if new_station.empty?
-      name_blank_message
-      manage_route(route)
-    else
-      route.add_station(Station.new(new_station))
-      puts "Station #{new_station} created"
-    end
+    route.add_station(Station.new(new_station))
+    puts "Station #{new_station} created"
 
     route.show_route
     manage_route(route)
   end
 
   def delete_station(route)
-    puts '-' * 50
     route.show_route
-    puts 'Please choose station to remove'
 
     begin
       station_index = Integer(gets.chomp)
@@ -284,7 +278,6 @@ class Main
     end
 
     route.del_station(station_index)
-    puts '-' * 50
     route.show_route
     manage_route(route)
   end

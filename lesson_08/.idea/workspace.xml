@@ -8,11 +8,10 @@
   <component name="ChangeListManager">
     <list default="true" id="ae9e47bd-23f2-45b6-bbd0-c99cdf758725" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/instance_counter.rb" afterPath="$PROJECT_DIR$/instance_counter.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.rb" afterPath="$PROJECT_DIR$/main.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mixins.rb" afterPath="$PROJECT_DIR$/mixins.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/route.rb" afterPath="$PROJECT_DIR$/route.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train.rb" afterPath="$PROJECT_DIR$/train.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/station.rb" afterPath="$PROJECT_DIR$/station.rb" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,18 +26,28 @@
       <file leaf-file-name="main.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-509">
-              <caret line="157" column="0" lean-forward="true" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
+            <state relative-caret-position="2646">
+              <caret line="272" column="9" lean-forward="true" selection-start-line="272" selection-start-column="9" selection-end-line="272" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mixins.rb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mixins.rb">
+      <file leaf-file-name="route.rb" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/route.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="63" column="21" lean-forward="false" selection-start-line="63" selection-start-column="6" selection-end-line="63" selection-end-column="21" />
+            <state relative-caret-position="235">
+              <caret line="30" column="6" lean-forward="false" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="train.rb" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/train.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="385">
+              <caret line="43" column="7" lean-forward="true" selection-start-line="43" selection-start-column="7" selection-end-line="43" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -55,12 +64,28 @@
       <find>wrong_op</find>
       <find>manage_train</find>
       <find>manage_train_options</find>
-      <find>train_route_attach</find>
       <find>blank_messa</find>
       <find>previous</find>
       <find>Argume</find>
       <find>name_blank_message</find>
+      <find>TRAINS_CARRIAGES</find>
+      <find>rescue</find>
+      <find>yie</find>
+      <find>create_station</find>
+      <find>train_route_attach</find>
+      <find>train.nil?</find>
+      <find>select_ro</find>
+      <find>show_route</find>
+      <find>Station.new</find>
+      <find>create_train_type</find>
+      <find>select_route</find>
+      <find>TRAINS_CARR</find>
       <find>route_train_attach</find>
+      <find>trains_carriages_menu</find>
+      <find>_arr</find>
+      <find>manage_route_options</find>
+      <find>attach tra</find>
+      <find>create_statio</find>
     </findStrings>
     <replaceStrings>
       <replace>@station_id</replace>
@@ -74,8 +99,9 @@
       <list>
         <option value="$PROJECT_DIR$/instance_counter.rb" />
         <option value="$PROJECT_DIR$/train.rb" />
-        <option value="$PROJECT_DIR$/route.rb" />
         <option value="$PROJECT_DIR$/mixins.rb" />
+        <option value="$PROJECT_DIR$/station.rb" />
+        <option value="$PROJECT_DIR$/route.rb" />
         <option value="$PROJECT_DIR$/main.rb" />
       </list>
     </option>
@@ -362,42 +388,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="13" lean-forward="true" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/instance_counter.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="25" lean-forward="true" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/route.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="603">
-          <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/station.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="13" lean-forward="true" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/passenger_train.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -442,18 +436,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/passenger_train.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="43" column="7" lean-forward="true" selection-start-line="43" selection-start-column="7" selection-end-line="43" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/station.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="12" lean-forward="true" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mixins.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="63" column="21" lean-forward="false" selection-start-line="63" selection-start-column="6" selection-end-line="63" selection-end-column="21" />
+        <state relative-caret-position="286">
+          <caret line="48" column="6" lean-forward="false" selection-start-line="48" selection-start-column="6" selection-end-line="48" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/route.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="30" column="6" lean-forward="false" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-509">
-          <caret line="157" column="0" lean-forward="true" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
+        <state relative-caret-position="2646">
+          <caret line="272" column="9" lean-forward="true" selection-start-line="272" selection-start-column="9" selection-end-line="272" selection-end-column="9" />
           <folding />
         </state>
       </provider>

@@ -8,6 +8,7 @@ class Route
 
   def initialize(start_station, end_station)
     @stations = [start_station, end_station]
+    puts "#{start_station} - #{end_station}"
     validate!
     @@all_routes << self
   end
@@ -28,7 +29,9 @@ class Route
   end
 
   def show_route
+    puts '-' * 50
     @stations.each.with_index { |s, i| puts "#{i} - #{s.name}" }
+    puts 'Please select station'
   end
 
   class << self
@@ -52,10 +55,8 @@ class Route
   private
 
   def validate!
-    if @stations.first.class.is_a?(Station) && @stations.last.class.is_a?(Station)
-      raise 'Invalid object'
-    elsif @stations.size < 2
-      raise 'Incomplete route'
-    end
+    raise 'Invalid object' unless @stations[0].instance_of?(Station) || @stations[-1].instance_of?(Station)
+    raise 'Incomplete routes' if @stations.size < 2
+    true
   end
 end

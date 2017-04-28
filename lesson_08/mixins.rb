@@ -61,12 +61,6 @@ module Mixins
   end
 
   # Messages
-  def train_not_found
-    puts "**********************************************\n"
-    puts "*             Train not found!!!             *\n"
-    puts "**********************************************\n\n"
-  end
-
   def name_blank_message
     puts "**********************************************\n"
     puts "*           Name can't be blank!!!           *\n"
