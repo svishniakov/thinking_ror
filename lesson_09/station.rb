@@ -1,8 +1,11 @@
+require_relative 'validation'
+
 class Station
   include Mixins
+  include Validation
   attr_accessor :trains, :name
 
-  STATION_NAME_FORMAT = /^[a-zа-я ]{3,}$/i
+  validate :name, presence: true, format: /^[a-zа-я ]{3,}$/i
 
   @@all_stations = []
 
@@ -11,13 +14,6 @@ class Station
     validate!
     @trains = []
     @@all_stations << self
-  end
-
-  def valid?
-    validate!
-  rescue => e
-    puts e.message.to_s
-    false
   end
 
   def train_arrival(train)
@@ -42,12 +38,5 @@ class Station
 
   def each_train
     @trains.each { |train| yield(train) }
-  end
-
-  private
-
-  def validate!
-    raise 'Wrong station name' if name !~ STATION_NAME_FORMAT
-    true
   end
 end

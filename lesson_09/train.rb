@@ -1,13 +1,13 @@
 require_relative 'manufacturer'
 require_relative 'instance_counter'
+require_relative 'validation'
 
 class Train
+  include Validation
   include Manufacturer
   include InstanceCounter
 
   attr_reader :number, :carriages
-
-  NUMBER_FORMAT = /^[a-zа-я\d]{3}-?[a-zа-я\d]{2}$/i
 
   # Train types
   # 1 - passenger
@@ -22,13 +22,6 @@ class Train
     @carriages = []
     @@all_trains[number] = self
     register_instance
-  end
-
-  def valid?
-    validate!
-  rescue => e
-    puts e
-    false
   end
 
   def self.all_trains
@@ -101,12 +94,5 @@ class Train
     else
       puts 'You are at the beginning of the route'
     end
-  end
-
-  protected
-
-  def validate!
-    raise 'Invalid train number format' if @number !~ NUMBER_FORMAT
-    true
   end
 end
